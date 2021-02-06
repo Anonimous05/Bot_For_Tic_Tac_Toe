@@ -87,6 +87,29 @@ def bot():
             state[str(mass[int(randomNum)])] = state["botFigure"]
 
 
+def winOrFail():
+    playerMove = set()
+    botMove = set()
+
+    for i in range(1, 10):
+        if state[str(i)] == state["playerFigure"]:
+            playerMove.add(i)
+        elif state[str(i)] == state["botFigure"]:
+            botMove.add(i)
+    for a in winNumbers:
+        setsForPlayer = a - playerMove
+        setsForBot = a - botMove
+        if len(setsForPlayer) == 0:
+            print("Вы выиграли!")
+            return "break"
+        elif len(setsForBot) == 0:
+            print("Вы проиграли!")
+            return "break"
+        elif state["1"] != " " and state["2"] != " " and state["3"] != " " and state["4"] != " " and state["5"] != " " and state["6"] != " " and state["7"] != " " and state["8"] != " " and state["9"] != " ":
+            print("Ничья!")
+            return "break"
+
+
 while True:
     try:
         number = int(input("Выберите номер от 1 до 9: "))
@@ -97,52 +120,7 @@ while True:
                 state[str(abs(number))] = state["playerFigure"]
                 bot()
                 print(board())
-                if state["1"] == state["botFigure"] and state["2"] == state["botFigure"] and state["3"] == state[
-                    "botFigure"] \
-                        or state["1"] == state["botFigure"] and state["4"] == state["botFigure"] and state["7"] == \
-                        state["botFigure"]:
-                    print("Вы проиграли!")
-                    break
-                elif state["4"] == state["botFigure"] and state["5"] == state["botFigure"] and state["6"] == state[
-                    "botFigure"] or state["2"] == state["botFigure"] and state["5"] == state["botFigure"] and state[
-                    "8"] == state["botFigure"]:
-                    print("Вы проиграли!")
-                    break
-                elif state["7"] == state["botFigure"] and state["8"] == state["botFigure"] and state["9"] == state[
-                    "playerFigure"] or state["3"] == state["botFigure"] and state["6"] == state["botFigure"] and state[
-                    "9"] == state["botFigure"]:
-                    print("Вы проиграли!")
-                    break
-                elif state["1"] == state["botFigure"] and state["5"] == state["botFigure"] and state["9"] == state[
-                    "botFigure"] or state["3"] == state["botFigure"] and state["5"] == state["botFigure"] and state[
-                    "7"] == state["botFigure"]:
-                    print("Вы проиграли!")
-                    break
-
-                elif state["1"] == state["playerFigure"] and state["2"] == state["playerFigure"] and state["3"] == state[
-                    "playerFigure"] \
-                        or state["1"] == state["playerFigure"] and state["4"] == state["playerFigure"] and state["7"] == \
-                        state["playerFigure"]:
-                    print("Вы выиграли!")
-                    break
-                elif state["4"] == state["playerFigure"] and state["5"] == state["playerFigure"] and state["6"] == state[
-                    "playerFigure"] or state["2"] == state["playerFigure"] and state["5"] == state["playerFigure"] and state[
-                    "8"] == state["playerFigure"]:
-                    print("Вы выиграли!")
-                    break
-                elif state["7"] == state["playerFigure"] and state["8"] == state["playerFigure"] and state["9"] == state[
-                    "playerFigure"] or state["3"] == state["playerFigure"] and state["6"] == state["playerFigure"] and state[
-                    "9"] == state["playerFigure"]:
-                    print("Вы выиграли!")
-                    break
-                elif state["1"] == state["playerFigure"] and state["5"] == state["playerFigure"] and state["9"] == state[
-                    "playerFigure"] or state["3"] == state["playerFigure"] and state["5"] == state["playerFigure"] and state[
-                    "7"] == state["playerFigure"]:
-                    print("Вы выиграли!")
-                    break
-
-                if state["1"] != " " and state["2"] != " " and state["3"] != " " and state["4"] != " " and state["5"] != " " and state["6"] != " " and state["7"] != " " and state["8"] != " " and state["9"] != " ":
-                    print("Ничья!")
+                if winOrFail() == "break":
                     break
             else:
                 print("Ход занят!")

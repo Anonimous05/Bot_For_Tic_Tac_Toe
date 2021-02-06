@@ -87,27 +87,38 @@ def bot():
             state[str(mass[int(randomNum)])] = state["botFigure"]
 
 
+def continueOrStop():
+    question = input("Продолжить (N или n) - нет или же любая буква чтобы продолжить: ")
+    if question.lower() == "n":
+        return "break"
+    else:
+        whichFigure()
+        return "continue"
+
+
 def winOrFail():
     playerMove = set()
     botMove = set()
 
-    for i in range(1, 10):
-        if state[str(i)] == state["playerFigure"]:
-            playerMove.add(i)
-        elif state[str(i)] == state["botFigure"]:
-            botMove.add(i)
+    for n in range(1, 10):
+        if state[str(n)] == state["playerFigure"]:
+            playerMove.add(n)
+        elif state[str(n)] == state["botFigure"]:
+            botMove.add(n)
+
     for a in winNumbers:
         setsForPlayer = a - playerMove
         setsForBot = a - botMove
         if len(setsForPlayer) == 0:
             print("Вы выиграли!")
-            return "break"
+            return continueOrStop()
         elif len(setsForBot) == 0:
             print("Вы проиграли!")
-            return "break"
-        elif state["1"] != " " and state["2"] != " " and state["3"] != " " and state["4"] != " " and state["5"] != " " and state["6"] != " " and state["7"] != " " and state["8"] != " " and state["9"] != " ":
-            print("Ничья!")
-            return "break"
+            return continueOrStop()
+
+    if state["1"] != " " and state["2"] != " " and state["3"] != " " and state["4"] != " " and state["5"] != " " and state["6"] != " " and state["7"] != " " and state["8"] != " " and state["9"] != " ":
+        print("Ничья!")
+        return continueOrStop()
 
 
 while True:
@@ -120,8 +131,12 @@ while True:
                 state[str(abs(number))] = state["playerFigure"]
                 bot()
                 print(board())
-                if winOrFail() == "break":
+                text = winOrFail()
+                if text == "break":
                     break
+                elif text == "continue":
+                    for i in range(1, 10):
+                        state[str(i)] = " "
             else:
                 print("Ход занят!")
     except ValueError:

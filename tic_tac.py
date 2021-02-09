@@ -116,7 +116,8 @@ def winOrFail():
             print("Вы проиграли!")
             return continueOrStop()
 
-    if state["1"] != " " and state["2"] != " " and state["3"] != " " and state["4"] != " " and state["5"] != " " and state["6"] != " " and state["7"] != " " and state["8"] != " " and state["9"] != " ":
+    if state["1"] != " " and state["2"] != " " and state["3"] != " " and state["4"] != " " and state["5"] != " " and \
+            state["6"] != " " and state["7"] != " " and state["8"] != " " and state["9"] != " ":
         print("Ничья!")
         return continueOrStop()
 
@@ -131,8 +132,16 @@ while True:
                 state[str(abs(number))] = state["playerFigure"]
                 bot()
                 print(board())
+
+                with open('boardText.txt', 'a') as boardW:
+                    boardW.write(board() + "\n\n")
+                    boardW.close()
+
                 text = winOrFail()
                 if text == "break":
+                    print("Пока!")
+                    with open('boardText.txt', 'w') as delete:
+                        pass
                     break
                 elif text == "continue":
                     for i in range(1, 10):
